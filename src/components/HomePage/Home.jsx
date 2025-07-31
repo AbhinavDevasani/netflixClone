@@ -6,6 +6,7 @@ import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { useNavigate } from 'react-router';
+import Slider from "react-slick";
 function Home() {
   const navigate=useNavigate();
   const [trendingMoviesList,setTrendingMoviesList]=useState([])
@@ -53,10 +54,42 @@ function Home() {
   const popularPage=()=>{
     navigate('/popular')
   }
+  const sliderSettings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 4,   // number of slides to show at once
+  slidesToScroll: 1, // number of slides to scroll
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+      }
+    },
+    {
+      breakpoint: 768,
+      settings: {
+        slidesToShow: 2,
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+      }
+    }
+    
+  ]
+  
+};
+const searchPageIcon=()=>{
+  navigate('/search')
+}
   return (
     
     <div>
-      <nav className=" flex w-full  px-[4%] py-5 relative z-10 h-[60vh] bg-cover bg-[url('https://flipthetruck.wordpress.com/wp-content/uploads/2013/06/man-of-steel-banner.png')]">
+      <nav className=" flex flex-col  w-full  px-[4%] py-5 relative z-10 h-[60vh] bg-cover bg-[url('https://flipthetruck.wordpress.com/wp-content/uploads/2013/06/man-of-steel-banner.png')]">
         <div className="flex flex-column  w-full ">
           <div className="w-full flex">
             <img
@@ -71,50 +104,59 @@ function Home() {
             </div>
           
             <div className="flex w-[100vw] h-[10vh] justify-items-end">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-3 ml-auto text-white h-[4vh]">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-2 ml-auto text-white h-[4vh] cursor-pointer" onClick={searchPageIcon}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
 
             </div>
           </div>
-          <div className="flex items-center justify-items-start">
-            <p>Super Man</p>
-          </div>
         </div>
+          <div className=" p-8 ">
+            <p className="text-white text-[40px] font-[500]">Super Man</p>
+            <p className="text-white w-[23vw]">
+              Superman is a fictional superhero who first appeared in American comic books published by DC Comics.
+            </p>
+            <button className="bg-white p-2 rounded-md mt-2 w-[4vw]">
+              Play
+            </button>
+          </div>
+        
         
       </nav>
-      <div className="bg-black h-[93vh] p-10">
+      <div className="bg-black h-[95vh] p-10 ">
           <p className="text-white ml-5 text-[20px] font-[500]">Trending Now</p>
-          
-          <div className="flex">
+        
+          <Slider {...sliderSettings}>
             {trendingMoviesList.map(movie=>{
               return(
                 <div className="ml-5 mt-5" key={movie.id}>
-                  <img src={movie.poster_path} alt={movie.id} className="h-[25vh] w-[20vw]"/>
+                  <img src={movie.poster_path} alt={movie.id} className="h-[170px] w-[254px] rounded-md"/>
                   
                 </div>
               )
             })}
-        </div>
+          </Slider>
+        
         <p className="text-white ml-5 text-[20px] font-[500] mt-2">Orginals</p>
-          <div className="flex">
+        
+          <Slider {...sliderSettings}>
             {orginalList.map(orginal=>{
               return(
-                <div className="ml-5 mt-5" key={orginal.id}>
-                  <img src={orginal.poster_path} alt={orginal.id} className="h-[25vh] w-[20vw]"/>
+                <div className="ml-5 mt-5 " key={orginal.id}>
+                  <img src={orginal.poster_path} alt={orginal.id} className="h-[170px] w-[254px] rounded-md "/>
                   
                 </div>
               )
             })}
-        </div>
-        <footer className="p-10 gap-5 h-[19vh] w-full bg-black flex flex-col items-center justify-center">
+          </Slider>
+        
+        <footer className="p-10 gap-5 h-[19vh] w-full bg-black flex flex-col items-center justify-center mt-4">
           <div className="flex gap-5 ">
             <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>
             <p className="text-white w-[2vw] h-[2vh]"><FaTwitter /></p>
             <p className="text-white w-[2vw] h-[2vh]"><FaInstagram /></p>
             <p className="text-white w-[2vw] h-[2vh]"><FaYoutube /></p>
           </div>
-          
           <p className="text-white">Contact Us</p>
         </footer>
       </div>
