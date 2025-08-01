@@ -6,6 +6,8 @@ import Home from './components/HomePage/Home'
 import Popular from './components/PopularPage/Popular'
 import NotFound from './components/NotFoundPage/NotFound'
 import SearchPage from './components/SearchPage/SearchPage'
+import MovieDetails from './components/MovieDetailsPage/MovieDetails'
+import Accounts from './components/AccountsPage/Accounts'
 function App() {
   
 
@@ -17,6 +19,8 @@ function App() {
       <Route path="/popular" element={<Popular></Popular>}></Route>
       <Route path="*" element={<NotFound></NotFound>}></Route>
       <Route path='/search' element={<SearchPage></SearchPage>}></Route>
+      <Route path='/moviedetails/:id' element={<MovieDetails></MovieDetails>}></Route>
+      <Route path="/accounts" element={<Accounts></Accounts>}></Route>
     </Routes>
      
     </>

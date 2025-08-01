@@ -6,6 +6,7 @@ import { FaGoogle } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+import { Link } from 'react-router';
 function Popular() {
     const navigate=useNavigate()
     const homePage=()=>{
@@ -33,6 +34,9 @@ function Popular() {
     const searchPageIcon=()=>{
       navigate('/search')
     }
+    const goAccounts=()=>{
+  navigate('/accounts')
+}
   return (
     <div className=" bg-black">
         <nav className=" flex w-full  px-[4%] py-5 relative z-10 ">
@@ -53,6 +57,7 @@ function Popular() {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-3 ml-auto text-white h-[4vh] cursor-pointer" onClick={searchPageIcon}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
+              <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[5px] ml-4 w-[35px] cursor-pointer" onClick={goAccounts}/>
 
             </div>
           </div>
@@ -62,7 +67,8 @@ function Popular() {
         </nav>
         <div className="flex flex-wrap gap-10 justify-center">    
                 {popularList.map(popular=>{
-                    return <img src={popular.poster_path} key={popular.id} className="h-[25vh] w-[15vw] rounded-lg"/>
+                  <Link to="/moviedetails"></Link>
+                    return <Link to="/moviedetails"><img src={popular.poster_path} key={popular.id} className="h-[25vh] w-[15vw] rounded-lg"/></Link>
                 })} 
         </div>
         <footer className="p-10 gap-5 h-[19vh] w-full bg-black flex flex-col items-center justify-center">

@@ -7,6 +7,8 @@ import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { useNavigate } from 'react-router';
 import Slider from "react-slick";
+
+import { Link } from 'react-router';
 function Home() {
   const navigate=useNavigate();
   const [trendingMoviesList,setTrendingMoviesList]=useState([])
@@ -86,10 +88,14 @@ function Home() {
 const searchPageIcon=()=>{
   navigate('/search')
 }
+const goAccounts=()=>{
+  navigate('/accounts')
+}
+
   return (
     
     <div>
-      <nav className=" flex flex-col  w-full  px-[4%] py-5 relative z-10 h-[60vh] bg-cover bg-[url('https://flipthetruck.wordpress.com/wp-content/uploads/2013/06/man-of-steel-banner.png')]">
+      <nav className=" flex flex-col  w-full  px-[4%] py-5 relative z-10 h-[90vh] bg-cover bg-[url('https://res.cloudinary.com/dudjdf428/image/upload/v1754038030/Image_2_x6q60d.png')]">
         <div className="flex flex-column  w-full ">
           <div className="w-full flex">
             <img
@@ -107,13 +113,13 @@ const searchPageIcon=()=>{
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-2 ml-auto text-white h-[4vh] cursor-pointer" onClick={searchPageIcon}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
-
+              <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[5px] ml-4 w-[35px] cursor-pointer" onClick={goAccounts}/>
             </div>
           </div>
         </div>
           <div className=" p-8 ">
-            <p className="text-white text-[40px] font-[500]">Super Man</p>
-            <p className="text-white w-[23vw]">
+            <p className="text-white text-[60px] font-[500]">Super Man</p>
+            <p className="text-white w-[23vw] text-[20px] mt-4 mb-4">
               Superman is a fictional superhero who first appeared in American comic books published by DC Comics.
             </p>
             <button className="bg-white p-2 rounded-md mt-2 w-[4vw]">
@@ -129,28 +135,32 @@ const searchPageIcon=()=>{
           <Slider {...sliderSettings}>
             {trendingMoviesList.map(movie=>{
               return(
-                <div className="ml-5 mt-5" key={movie.id}>
-                  <img src={movie.poster_path} alt={movie.id} className="h-[170px] w-[254px] rounded-md"/>
-                  
-                </div>
+                <Link to={`/movieDetails/${movie.id}`}>
+                  <div className="ml-5 mt-5" key={movie.id}>
+                    <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
+                    
+                  </div>
+                </Link>
               )
             })}
           </Slider>
         
-        <p className="text-white ml-5 text-[20px] font-[500] mt-2">Orginals</p>
+        <p className="text-white ml-5 text-[20px] font-[500] mt-2">Originals</p>
         
           <Slider {...sliderSettings}>
             {orginalList.map(orginal=>{
               return(
-                <div className="ml-5 mt-5 " key={orginal.id}>
-                  <img src={orginal.poster_path} alt={orginal.id} className="h-[170px] w-[254px] rounded-md "/>
-                  
-                </div>
+                <Link to="/moviedetails">
+                  <div className="ml-5 mt-5 " key={orginal.id}>
+                    <img src={orginal.poster_path} alt={orginal.id} className="h-[190px] w-[254px] rounded-md "/>
+                    
+                  </div>
+                </Link>
               )
             })}
           </Slider>
         
-        <footer className="p-10 gap-5 h-[19vh] w-full bg-black flex flex-col items-center justify-center mt-4">
+        <footer className=" gap-5   flex flex-col items-center justify-center mt-7">
           <div className="flex gap-5 ">
             <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>
             <p className="text-white w-[2vw] h-[2vh]"><FaTwitter /></p>
