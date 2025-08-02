@@ -30,7 +30,7 @@ function Popular() {
             let data=await response.json()
             if(response.ok){
                 setPopularList(data.results)
-                console.log(data.results)
+                
             }
         }
         popularMovies()

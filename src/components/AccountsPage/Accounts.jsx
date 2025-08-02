@@ -4,10 +4,8 @@ import Cookies from 'js-cookie'
 
 function Accounts() {
     const navigate=useNavigate()
-    const token=Cookies.get('jwt_token')
-    if(!token){
-      navigate('/')
-    }
+    
+    
      const searchPageIcon=()=>{
       navigate('/search')
     }

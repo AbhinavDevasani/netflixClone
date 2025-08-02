@@ -6,6 +6,7 @@ import { FaGoogle } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+
 const MovieDetails=()=> {
     const [movieDetailedViewList,setMovieDetailedView]=useState(null)
     const [adultMovie,setAdultMovie]=useState(true)
@@ -29,7 +30,7 @@ const MovieDetails=()=> {
             if(response.ok){
                 setMovieDetailedView(data.movie_details)
                 setAdultMovie(data.movie_details.adult)
-                console.log(data)
+                
             }
         }
         movieDetailedView()
@@ -117,43 +118,55 @@ const MovieDetails=()=> {
         )}
         </div>
         <div className="bg-black">
-          <div className="flex justify-between gap-10 w-[60vw] p-5 ">
-            <div>
-                <p className="text-[15px] text-[#94A3B8]">Genres</p>
-                {movieDetailedViewList?.genres?.map((genre) => (
-                    <p key={genre.id} className="text-white">{genre.name}</p>
-                ))}
+            <div className="bg-black py-6 px-4">
+                <div className="flex justify-center">
+                    <div className="flex justify-between w-full max-w-5xl text-white">
+                        <div>
+                            <p className="text-[#94A3B8] text-sm font-semibold mb-1">Genres</p>
+                            {movieDetailedViewList?.genres?.map((genre) => (
+                            <p key={genre.id} className="text-sm mb-[2px]">{genre.name}</p>
+                            ))}
+                        </div>
+                        <div>
+                            <p className="text-[#94A3B8] text-sm font-semibold mb-1">Audio Available</p>
+                            {movieDetailedViewList?.spoken_languages?.map((lang, idx) => (
+                            <p key={idx} className="text-sm mb-[2px]">{lang.english_name}</p>
+                            ))}
+                        </div>
+                        <div>
+                            <p className="text-[#94A3B8] text-sm font-semibold mb-1">Rating Count</p>
+                            <p className="text-sm mb-2">{movieDetailedViewList?.vote_count?.toLocaleString()}</p>
+                            <p className="text-[#94A3B8] text-sm font-semibold mb-1">Rating Average</p>
+                            <p className="text-sm">{movieDetailedViewList?.vote_average}</p>
+                        </div>
+                        <div>
+                            <p className="text-[#94A3B8] text-sm font-semibold mb-1">Budget</p>
+                            <p className="text-sm mb-2">₹{movieDetailedViewList?.budget?.toLocaleString()} Crores</p>
+                            <p className="text-[#94A3B8] text-sm font-semibold mb-1">Release Date</p>
+                            <p className="text-sm">
+                            {new Date(movieDetailedViewList?.release_date).toLocaleDateString('en-GB', {
+                                day: 'numeric',
+                                month: 'long',
+                                year: 'numeric',
+                            })}
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
             </div>
-            <div>
-                <p className="text-[15px] text-[#94A3B8]">Genres</p>
-                {movieDetailedViewList?.spoken_languages?.map((languages) => (
-                    <p key={languages.id} className="text-white">{languages.english_name}</p>
-                ))}
-            </div>
-            <div>
-                <p className="text-[15px] text-[#94A3B8]">Vote count</p>
-                <p className="text-white">{movieDetailedViewList?.vote_count}</p>
-                <p className="text-[15px] text-[#94A3B8]">Vote average</p>
-                <p className="text-white">{movieDetailedViewList?.vote_average}</p>
-            </div>
-            <div>
-                <p className="text-[15px] text-[#94A3B8]">Budget</p>
-                <p className="text-white">{movieDetailedViewList?.budget}</p>
-                <p className="text-[15px] text-[#94A3B8]">Release Date</p>
-                <p className="text-white">{movieDetailedViewList?.release_date}</p>
-            </div>
-          </div>
-          <div className="text-white p-5">
+            <div className="text-white p-5">
             <p className="text-[25px] ml-2 font-[500]">Similar Movies</p>
             <div className="flex-wrap flex gap-10 ml-2 mt-2">
                 
                 {movieDetailedViewList?.similar_movies?.map(movie=>{
-                    return <div>
-                        <img src={movie.backdrop_path} className="h-[170px] w-[255px]" id={movie.id}/>
+                    return<div>
+                        
+                        <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>       
                     </div>
                 })}
             </div>
-          </div>
+            </div>
             <footer className=" gap-5  flex flex-col items-center justify-center mt-7">
                 <div className="flex gap-5 ">
                     <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>

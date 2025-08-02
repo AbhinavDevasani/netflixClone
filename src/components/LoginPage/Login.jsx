@@ -122,7 +122,9 @@ function Login() {
       
       <div className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-[#e50914] to-[#b20710]"></div>
     </div>
+    
   );
+  
 }
 
 export default Login;
