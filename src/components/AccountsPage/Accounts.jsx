@@ -4,6 +4,10 @@ import Cookies from 'js-cookie'
 
 function Accounts() {
     const navigate=useNavigate()
+    const token=Cookies.get('jwt_token')
+    if(!token){
+      navigate('/')
+    }
      const searchPageIcon=()=>{
       navigate('/search')
     }
@@ -13,13 +17,14 @@ function Accounts() {
     const popularPage=()=>{
     navigate('/popular')
   }
+
   const logOut=()=>{
     Cookies.remove('jwt_token')
     navigate('/')
   }
   return (
     <>
-    <div className="bg-black">
+    <nav className="bg-black">
       <nav className=" flex w-full  px-[4%] py-5 relative z-10 ">
         <div className="flex flex-column  w-full ">
           <div className="w-full flex">
@@ -46,7 +51,7 @@ function Accounts() {
         </div>
         
         </nav>
-    </div>
+    </nav>
     <div className="p-10">
         <p className="text-[30px] p-3">Accounts </p>
         <hr className="w-[94vw] flex justify-self-center mt-3 text-gray-500"/>

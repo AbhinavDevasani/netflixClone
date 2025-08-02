@@ -1,7 +1,11 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
 import Cookies from 'js-cookie'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
+import { FaGoogle } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
 function SearchPage() {
     const navigate=useNavigate()
   const [searchInput,setSearchInput]=useState('')
@@ -12,11 +16,16 @@ function SearchPage() {
   const homeNavigation=()=>{
         navigate('/home')
     }
+  const goAccounts=()=>{
+    navigate('/accounts')
+  }
   useEffect(()=>{
     const searchMovies=async()=>{
         const token=Cookies.get('jwt_token')
         const url = `https://apis.ccbp.in/movies-app/movies-search?search=${searchInput}`;
-        
+        if(!token){
+          navigate('/')
+        }
         let options={
             method:"GET",
             headers:{
@@ -33,7 +42,7 @@ function SearchPage() {
     searchMovies()
   },[searchInput])
   return (
-    <div className="bg-black  w-full">
+    <div className="bg-black  w-full ">
       <nav className=" flex flex-col  w-full  px-[4%] py-5 relative z-10 h-[20vh] bg-cover">
         <div className="flex flex-column  w-full ">
           <div className="w-full flex">
@@ -55,21 +64,37 @@ function SearchPage() {
                     </svg>
                 </label>
             </div>
+            <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[6px] ml-4 w-[35px] cursor-pointer" onClick={goAccounts}/>
           </div>
-        </div>
-          
-        
-        
+        </div>  
       </nav>
-      <div className=" flex flex-wrap gap-5 ml-5">
-        {moviesList.map((movies)=>{
-            return(
-                <div id={movies.id}>
-                    <img src={movies.poster_path} className="h-[25vh] w-[15vw] rounded-lg"/>
-                </div>
-            )
-        })}
+
+
+      <div>
+        {moviesList.length===0?
+          <div className="flex flex-col justify-center h-[100vh] items-center bg-black ">
+            <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754130805/Group_7394_fuha3y.png" className="h-[60vh] w-[40vw]"/>
+            <p className='text-white mt-6 text-[20px]'>Your search for {searchInput} did not find any matches</p>
+          </div>:
+          <div className=" flex flex-wrap gap-5 ml-5 justify-center">
+            {moviesList.map(movie => (
+              <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
+                <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>                      
+              </Link>
+              ))}  
+          </div>}
+          <footer className="p-10 gap-5 h-[19vh] w-full bg-black flex flex-col items-center justify-center">
+            <div className="flex gap-5 ">
+              <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>
+              <p className="text-white w-[2vw] h-[2vh]"><FaTwitter /></p>
+              <p className="text-white w-[2vw] h-[2vh]"><FaInstagram /></p>
+              <p className="text-white w-[2vw] h-[2vh]"><FaYoutube /></p>
+            </div>
+            <p className="text-white">Contact Us</p>
+          </footer>
       </div>
+
+      
     </div>
   )
 }

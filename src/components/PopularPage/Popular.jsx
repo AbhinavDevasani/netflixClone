@@ -17,6 +17,9 @@ function Popular() {
         const popularMovies=async()=>{
             const token=Cookies.get('jwt_token')
             let url="https://apis.ccbp.in/movies-app/popular-movies"
+            if(!token){
+            navigate('/')
+          }
             let options={
                 method:"GET",
                 headers:{
@@ -27,6 +30,7 @@ function Popular() {
             let data=await response.json()
             if(response.ok){
                 setPopularList(data.results)
+                console.log(data.results)
             }
         }
         popularMovies()
@@ -65,11 +69,13 @@ function Popular() {
         </div>
         
         </nav>
-        <div className="flex flex-wrap gap-10 justify-center">    
-                {popularList.map(popular=>{
-                  <Link to="/moviedetails"></Link>
-                    return <Link to="/moviedetails"><img src={popular.poster_path} key={popular.id} className="h-[25vh] w-[15vw] rounded-lg"/></Link>
-                })} 
+        <div className="flex flex-wrap gap-10 justify-center"> 
+            {popularList.map(movie => (
+              <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
+                <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
+                            
+              </Link>
+            ))}  
         </div>
         <footer className="p-10 gap-5 h-[19vh] w-full bg-black flex flex-col items-center justify-center">
                   <div className="flex gap-5 ">

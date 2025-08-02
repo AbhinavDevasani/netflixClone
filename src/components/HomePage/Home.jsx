@@ -6,52 +6,79 @@ import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { useNavigate } from 'react-router';
+
 import Slider from "react-slick";
 
 import { Link } from 'react-router';
 function Home() {
   const navigate=useNavigate();
   const [trendingMoviesList,setTrendingMoviesList]=useState([])
+  const [trendingError, setTrendingError] = useState(false);
   const [orginalList,setOrginalList]=useState([])
+  const [originalError, setOriginalError] = useState(false);
   useEffect(()=>{
-    const trendingMovies=async()=>{
-      const token = Cookies.get('jwt_token');
-      let url="https://apis.ccbp.in/movies-app/trending-movies"
-      const options={
-        method:"GET",
-        headers: {
-          Authorization: `Bearer ${token}`, // add Authorization header
-        },
-        
-      }
-      let response=await fetch(url,options)
-      let data=await response.json()
-      if(response.ok){
-        setTrendingMoviesList(data.results)
-        
-      }
-      
-    }
-    trendingMovies()
-  },[])
-  useEffect(()=>{
-    const orginalMovies=async()=>{
-      let token=Cookies.get("jwt_token")
-      let url="https://apis.ccbp.in/movies-app/originals"
-      let options={
-        method:"GET",
-        headers:{
-          Authorization: `Bearer ${token}`
+      const trendingMovies=async()=>{
+        const token = Cookies.get('jwt_token');
+        if(!token){
+          navigate('/')
         }
-      }
-      let response=await fetch(url,options)
-      let data=await response.json()
-      if(response.ok){
-        setOrginalList(data.results)
-      }
-    }
-    orginalMovies()
+        let url="https://apis.ccbp.in/movies-app/trending-movies"
+        const options={
+          method:"GET",
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+          
+        }
+        try {
+          const response = await fetch(url, options);
+          const data = await response.json();
 
+          if (response.ok) {
+            setTrendingMoviesList(data.results);
+            setTrendingError(false);
+          }
+          else {
+            setTrendingError(true);
+          }
+        }
+        catch{
+          setTrendingError(true);
+        } 
+      }  
+      trendingMovies()
+  },[])
+ useEffect(()=>{
+      const orginalMovies=async()=>{
+        const token = Cookies.get('jwt_token');
+        if(!token){
+          navigate('/')
+        }
+        let url="https://apis.ccbp.in/movies-app/originals"
+        const options={
+          method:"GET",
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+          
+        }
+        try {
+          const response = await fetch(url, options);
+          const data = await response.json();
+
+          if (response.ok) {
+            setOrginalList(data.results)
+            setTrendingError(false);
+          }
+          else {
+            setOriginalError(true);
+          }
+        }
+        catch{
+          setOriginalError(true)
+        } 
+      }  
+      orginalMovies()
   },[])
   const popularPage=()=>{
     navigate('/popular')
@@ -130,36 +157,47 @@ const goAccounts=()=>{
         
       </nav>
       <div className="bg-black h-[95vh] p-10 ">
-          <p className="text-white ml-5 text-[20px] font-[500]">Trending Now</p>
-        
+        <p className="text-white ml-5 text-[20px] font-[500]">Trending Now</p>
+         <div>
+          {trendingError ? 
+            <div>
+              <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754138507/6076393_telgzb.jpg" className="h-[48px] w-[48px] flex justify-self-center"/>
+              <p className="text-white text-center mt-4">Something went wrong. Please try again</p>
+              <button className='bg-white flex justify-self-center mt-2 p-1 rounded-sm'>Try Again</button>
+            </div>
+           : 
           <Slider {...sliderSettings}>
-            {trendingMoviesList.map(movie=>{
-              return(
-                <Link to={`/movieDetails/${movie.id}`}>
-                  <div className="ml-5 mt-5" key={movie.id}>
-                    <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
-                    
-                  </div>
-                </Link>
-              )
-            })}
+            {trendingMoviesList.map(movie => (
+              <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
+                <div className="ml-5 mt-5">
+                  <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
+                </div>
+              </Link>
+              ))}
           </Slider>
-        
+          }
+        </div>  
+
+         
         <p className="text-white ml-5 text-[20px] font-[500] mt-2">Originals</p>
-        
+        {originalError ? 
+            <div>
+              <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754138507/6076393_telgzb.jpg" className="h-[48px] w-[48px] flex justify-self-center"/>
+              <p className="text-white text-center mt-4">Something went wrong. Please try again</p>
+              <button className='bg-white flex justify-self-center mt-2 p-1 rounded-sm'>Try Again</button>
+            </div>
+           : 
           <Slider {...sliderSettings}>
-            {orginalList.map(orginal=>{
-              return(
-                <Link to="/moviedetails">
-                  <div className="ml-5 mt-5 " key={orginal.id}>
-                    <img src={orginal.poster_path} alt={orginal.id} className="h-[190px] w-[254px] rounded-md "/>
-                    
-                  </div>
-                </Link>
-              )
-            })}
+            {orginalList.map(movie => (
+              <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
+                <div className="ml-5 mt-5">
+                  <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
+                </div>
+              </Link>
+              ))}
           </Slider>
-        
+          }
+          
         <footer className=" gap-5   flex flex-col items-center justify-center mt-7">
           <div className="flex gap-5 ">
             <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>

@@ -2,14 +2,21 @@ import React, {useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router'
-const MovieDetails=props=> {
-    const [movieDetailedViewList,setMovieDetailedView]=useState([])
+import { FaGoogle } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
+const MovieDetails=()=> {
+    const [movieDetailedViewList,setMovieDetailedView]=useState(null)
     const [adultMovie,setAdultMovie]=useState(true)
     const navigate=useNavigate()
     const {id}=useParams()
     useEffect(()=>{
         const movieDetailedView=async()=>{
             const token=Cookies.get("jwt_token")
+            if(!token){
+                navigate('/')
+            }
             let url=`https://apis.ccbp.in/movies-app/movies/${id}`
             let options={
                 method:"GET",
@@ -39,8 +46,9 @@ const MovieDetails=props=> {
     const homePage=()=>{
         navigate('/home')
     }
+    
   return (
-    <div className="w-full bg-cover bg-center relative"
+    <div className="w-full h-[70vh] bg-cover bg-center relative"
         style={{
             backgroundImage: movieDetailedViewList
             ? `url(${movieDetailedViewList.backdrop_path})`
@@ -89,16 +97,12 @@ const MovieDetails=props=> {
                 </div>
             </div>
         </nav>
-
-
-        <div
-        
-        >
+        <div className="p-10">
         {movieDetailedViewList && (
-            <div className='p-10'>
+            <div>
             <p className="text-white text-[39px] font-[500]">{movieDetailedViewList.title}</p>
             <div className="flex gap-3 text-white font-[500]">
-                <p>{movieDetailedViewList.runtime}</p>
+                <p>{movieDetailedViewList.runtime} min</p>
                 {
                     adultMovie ?<p>18+</p> :<p className="border-1 border-white text-white w-[4vw] text-center">U/A</p>
                     
@@ -111,6 +115,54 @@ const MovieDetails=props=> {
             <button className="bg-white p-2 rounded-md mt-2 w-[6vw]">Play</button>
             </div>
         )}
+        </div>
+        <div className="bg-black">
+          <div className="flex justify-between gap-10 w-[60vw] p-5 ">
+            <div>
+                <p className="text-[15px] text-[#94A3B8]">Genres</p>
+                {movieDetailedViewList?.genres?.map((genre) => (
+                    <p key={genre.id} className="text-white">{genre.name}</p>
+                ))}
+            </div>
+            <div>
+                <p className="text-[15px] text-[#94A3B8]">Genres</p>
+                {movieDetailedViewList?.spoken_languages?.map((languages) => (
+                    <p key={languages.id} className="text-white">{languages.english_name}</p>
+                ))}
+            </div>
+            <div>
+                <p className="text-[15px] text-[#94A3B8]">Vote count</p>
+                <p className="text-white">{movieDetailedViewList?.vote_count}</p>
+                <p className="text-[15px] text-[#94A3B8]">Vote average</p>
+                <p className="text-white">{movieDetailedViewList?.vote_average}</p>
+            </div>
+            <div>
+                <p className="text-[15px] text-[#94A3B8]">Budget</p>
+                <p className="text-white">{movieDetailedViewList?.budget}</p>
+                <p className="text-[15px] text-[#94A3B8]">Release Date</p>
+                <p className="text-white">{movieDetailedViewList?.release_date}</p>
+            </div>
+          </div>
+          <div className="text-white p-5">
+            <p className="text-[25px] ml-2 font-[500]">Similar Movies</p>
+            <div className="flex-wrap flex gap-10 ml-2 mt-2">
+                
+                {movieDetailedViewList?.similar_movies?.map(movie=>{
+                    return <div>
+                        <img src={movie.backdrop_path} className="h-[170px] w-[255px]" id={movie.id}/>
+                    </div>
+                })}
+            </div>
+          </div>
+            <footer className=" gap-5  flex flex-col items-center justify-center mt-7">
+                <div className="flex gap-5 ">
+                    <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>
+                    <p className="text-white w-[2vw] h-[2vh]"><FaTwitter /></p>
+                    <p className="text-white w-[2vw] h-[2vh]"><FaInstagram /></p>
+                    <p className="text-white w-[2vw] h-[2vh]"><FaYoutube /></p>
+                </div>
+                <p className="text-white">Contact Us</p>
+            </footer>
         </div>
 
     </div>
