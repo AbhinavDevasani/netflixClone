@@ -10,6 +10,7 @@ function SearchPage() {
     const navigate=useNavigate()
   const [searchInput,setSearchInput]=useState('')
   const [moviesList,setMoviesList]=useState([])
+  const [loading,setLoading]=useState(true)
   const popularNavigation=()=>{
     navigate('/popular')
   }
@@ -36,7 +37,7 @@ function SearchPage() {
         let data=await response.json()
         if(response.ok){
             setMoviesList(data.results)
-            
+            setLoading(false)
         }
     }
     searchMovies()
@@ -71,18 +72,26 @@ function SearchPage() {
 
 
       <div>
-        {moviesList.length===0?
-          <div className="flex flex-col justify-center h-[100vh] items-center bg-black ">
-            <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754130805/Group_7394_fuha3y.png" className="h-[60vh] w-[40vw]"/>
-            <p className='text-white mt-6 text-[20px]'>Your search for {searchInput} did not find any matches</p>
-          </div>:
-          <div className=" flex flex-wrap gap-5 ml-5 justify-center">
-            {moviesList.map(movie => (
-              <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
-                <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>                      
-              </Link>
-              ))}  
-          </div>}
+      {loading?
+      <div className="flex justify-center items-center h-40">
+        <div className="w-10 h-10 border-4 border-t-transparent border-red-500 rounded-full animate-spin"></div>
+      </div>:(
+        <div>
+          {moviesList.length===0?
+            <div className="flex flex-col justify-center h-[100vh] items-center bg-black ">
+              <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754130805/Group_7394_fuha3y.png" className="h-[60vh] w-[40vw]"/>
+              <p className='text-white mt-6 text-[20px]'>Your search for {searchInput} did not find any matches</p>
+            </div>:
+            <div className=" flex flex-wrap gap-5 ml-5 justify-center">
+              {moviesList.map(movie => (
+                <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
+                  <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>                      
+                </Link>
+                ))}  
+            </div>}
+          </div>
+      )}
+      
           <footer className="p-10 gap-5 h-[19vh] w-full bg-black flex flex-col items-center justify-center">
             <div className="flex gap-5 ">
               <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>

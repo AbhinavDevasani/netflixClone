@@ -10,6 +10,7 @@ import { FaYoutube } from "react-icons/fa";
 const MovieDetails=()=> {
     const [movieDetailedViewList,setMovieDetailedView]=useState(null)
     const [adultMovie,setAdultMovie]=useState(true)
+    
     const navigate=useNavigate()
     const {id}=useParams()
     useEffect(()=>{
@@ -141,7 +142,7 @@ const MovieDetails=()=> {
                         </div>
                         <div>
                             <p className="text-[#94A3B8] text-sm font-semibold mb-1">Budget</p>
-                            <p className="text-sm mb-2">₹{movieDetailedViewList?.budget?.toLocaleString()} Crores</p>
+                            <p className="text-sm mb-2">₹{movieDetailedViewList?.budget?.toLocaleString()}</p>
                             <p className="text-[#94A3B8] text-sm font-semibold mb-1">Release Date</p>
                             <p className="text-sm">
                             {new Date(movieDetailedViewList?.release_date).toLocaleDateString('en-GB', {

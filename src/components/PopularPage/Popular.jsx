@@ -7,7 +7,9 @@ import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { Link } from 'react-router';
+
 function Popular() {
+    const [loading, setLoading] = useState(true);
     const navigate=useNavigate()
     const homePage=()=>{
         navigate('/home')
@@ -30,7 +32,7 @@ function Popular() {
             let data=await response.json()
             if(response.ok){
                 setPopularList(data.results)
-                
+                setLoading(false)  
             }
         }
         popularMovies()
@@ -69,7 +71,11 @@ function Popular() {
         </div>
         
         </nav>
-        <div className="flex flex-wrap gap-10 justify-center"> 
+        {loading?
+        <div className="flex justify-center items-center h-40">
+          <div className="w-10 h-10 border-4 border-t-transparent border-red-500 rounded-full animate-spin"></div>
+        </div>:
+          <div className="flex flex-wrap gap-10 justify-center"> 
             {popularList.map(movie => (
               <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
                 <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
@@ -77,6 +83,8 @@ function Popular() {
               </Link>
             ))}  
         </div>
+        }
+        
         <footer className="p-10 gap-5 h-[19vh] w-full bg-black flex flex-col items-center justify-center">
                   <div className="flex gap-5 ">
                     <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>

@@ -16,6 +16,7 @@ function Home() {
   const [trendingError, setTrendingError] = useState(false);
   const [orginalList,setOrginalList]=useState([])
   const [originalError, setOriginalError] = useState(false);
+  const [loading,setLoading]=useState(true)
   useEffect(()=>{
       const trendingMovies=async()=>{
         const token = Cookies.get('jwt_token');
@@ -37,6 +38,7 @@ function Home() {
           if (response.ok) {
             setTrendingMoviesList(data.results);
             setTrendingError(false);
+            setLoading(false)
           }
           else {
             setTrendingError(true);
@@ -69,6 +71,7 @@ function Home() {
           if (response.ok) {
             setOrginalList(data.results)
             setTrendingError(false);
+            setLoading(false)
           }
           else {
             setOriginalError(true);
@@ -158,7 +161,11 @@ const goAccounts=()=>{
       </nav>
       <div className="bg-black h-[95vh] p-10 ">
         <p className="text-white ml-5 text-[20px] font-[500]">Trending Now</p>
-         <div>
+        {loading? 
+        <div className="flex justify-center items-center h-40">
+          <div className="w-10 h-10 border-4 border-t-transparent border-red-500 rounded-full animate-spin"></div>
+        </div>:(
+          <div>
           {trendingError ? 
             <div>
               <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754138507/6076393_telgzb.jpg" className="h-[48px] w-[48px] flex justify-self-center"/>
@@ -177,26 +184,36 @@ const goAccounts=()=>{
           </Slider>
           }
         </div>  
+        )}
+         
 
          
         <p className="text-white ml-5 text-[20px] font-[500] mt-2">Originals</p>
-        {originalError ? 
-            <div>
-              <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754138507/6076393_telgzb.jpg" className="h-[48px] w-[48px] flex justify-self-center"/>
-              <p className="text-white text-center mt-4">Something went wrong. Please try again</p>
-              <button className='bg-white flex justify-self-center mt-2 p-1 rounded-sm'>Try Again</button>
-            </div>
-           : 
-          <Slider {...sliderSettings}>
-            {orginalList.map(movie => (
-              <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
-                <div className="ml-5 mt-5">
-                  <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
-                </div>
-              </Link>
-              ))}
-          </Slider>
-          }
+        {loading?
+        <div className="flex justify-center items-center h-40">
+          <div className="w-10 h-10 border-4 border-t-transparent border-red-500 rounded-full animate-spin"></div>
+        </div>:(
+          <div>
+          {originalError ? 
+              <div>
+                <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754138507/6076393_telgzb.jpg" className="h-[48px] w-[48px] flex justify-self-center"/>
+                <p className="text-white text-center mt-4">Something went wrong. Please try again</p>
+                <button className='bg-white flex justify-self-center mt-2 p-1 rounded-sm'>Try Again</button>
+              </div>
+            : 
+            <Slider {...sliderSettings}>
+              {orginalList.map(movie => (
+                <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
+                  <div className="ml-5 mt-5">
+                    <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
+                  </div>
+                </Link>
+                ))}
+            </Slider>
+            }
+          </div>
+        )}
+        
           
         <footer className=" gap-5   flex flex-col items-center justify-center mt-7">
           <div className="flex gap-5 ">
