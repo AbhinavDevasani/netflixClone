@@ -11,6 +11,7 @@ function SearchPage() {
   const [searchInput,setSearchInput]=useState('')
   const [moviesList,setMoviesList]=useState([])
   const [loading,setLoading]=useState(true)
+  const[menuOpen,setMenuOpen]=useState(false)
   const popularNavigation=()=>{
     navigate('/popular')
   }
@@ -42,9 +43,15 @@ function SearchPage() {
     }
     searchMovies()
   },[searchInput])
+  const toggleMenu=()=>{
+  setMenuOpen(prev=>!prev)
+}
+  const popularPage=()=>{
+    navigate('/popular')
+  }
   return (
     <div className="bg-black  w-full ">
-      <nav className=" flex flex-col  w-full  px-[4%] py-5 relative z-10 h-[20vh] bg-cover">
+      <nav className=" flex flex-col  w-full  px-[4%] py-5 relative z-10 sm:h-[20vh] bg-cover">
         <div className="flex flex-column  w-full ">
           <div className="w-full flex">
             <img
@@ -53,23 +60,31 @@ function SearchPage() {
               className="h-[45px] w-auto"
             />
           
-            <div className="flex gap-4 ml-5 mt-3 text-white">
+            <div className="sm:flex gap-4 ml-5 mt-3 text-white hidden sm:block">
                 <p onClick={homeNavigation} className="cursor-pointer">Home</p>
                 <p  className="cursor-pointer" onClick={popularNavigation}>Popular</p>
             </div>   
-            <div className="flex w-[100vw] h-[10vh] justify-end">
-                <input type="text" className="bg-black h-[5vh] border border-white mt-2 rounded-l-md text-white" onChange={(e)=>setSearchInput(e.target.value)}/>
+            <div className="flex w-[100vw] sm:h-[10vh] justify-end sm:justify-end">
+                <input type="text" className="bg-black sm:h-[5vh] h-[3vh] w-[30vw] sm:w-[15vw] border border-white sm:mt-2 rounded-l-md text-white p-1 mt-3" onChange={(e)=>setSearchInput(e.target.value)} placeholder='Search'/>
                 <label for="searchbox">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6  rounded-r-sm mt-2 text-white h-[34px] w-[28px] cursor-pointer bg-gray-500 border border-white text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6  rounded-r-sm sm:mt-2 text-white sm:h-[34px] sm:w-[28px] cursor-pointer bg-gray-500 border border-white text-white h-[27px] mt-3">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                     </svg>
                 </label>
             </div>
-            <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[6px] ml-4 w-[35px] cursor-pointer" onClick={goAccounts}/>
+            <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[5px] ml-4 w-[35px] cursor-pointer hidden sm:block" onClick={goAccounts}/>
+            <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754295982/add-to-queue_1_cynvod.png" className="h-[4vh] mt-[5px] ml-4 w-[30px] cursor-pointer sm:hidden" onClick={toggleMenu}/>
           </div>
         </div>  
       </nav>
-
+       {menuOpen&&
+        <div className="flex flex-row ml-10 text-white mb-3">
+          <div>
+            <p className="cursor-pointer">Home</p>
+            <p onClick={popularPage}>Popular</p>
+            <p onClick={goAccounts} className="cursor-pointer">Account</p>
+          </div>
+      </div>}
 
       <div>
       {loading?
@@ -82,10 +97,10 @@ function SearchPage() {
               <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754130805/Group_7394_fuha3y.png" className="h-[60vh] w-[40vw]"/>
               <p className='text-white mt-6 text-[20px]'>Your search for {searchInput} did not find any matches</p>
             </div>:
-            <div className=" flex flex-wrap gap-5 ml-5 justify-center">
+            <div className=" flex flex-wrap sm:gap-5 sm:ml-5 justify-center gap-3">
               {moviesList.map(movie => (
                 <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
-                  <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>                      
+                  <img src={movie.poster_path} alt={movie.id} className="sm:h-[190px] sm:w-[254px] h-[17vh] rounded-md"/>                      
                 </Link>
                 ))}  
             </div>}

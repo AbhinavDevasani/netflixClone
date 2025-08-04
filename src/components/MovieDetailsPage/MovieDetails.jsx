@@ -57,7 +57,7 @@ const MovieDetails=()=> {
             : 'none',
         }}>
       
-        <nav className="flex flex-col w-full px-[4%] py-5 relative z-10 h-[13vh] bg-cover  bg-black/40 ">
+        <nav className="flex flex-col w-full px-[4%] py-5 relative z-10 sm:h-[13vh] bg-cover  bg-black/40 h-[10vh]">
             <div className="flex flex-col w-full">
                 <div className="w-full flex ">
                 
@@ -99,14 +99,14 @@ const MovieDetails=()=> {
                 </div>
             </div>
         </nav>
-        <div className="p-10">
+        <div className="sm:p-10 p-3">
         {movieDetailedViewList && (
             <div>
             <p className="text-white text-[39px] font-[500]">{movieDetailedViewList.title}</p>
             <div className="flex gap-3 text-white font-[500]">
                 <p>{movieDetailedViewList.runtime} min</p>
                 {
-                    adultMovie ?<p>18+</p> :<p className="border-1 border-white text-white w-[4vw] text-center">U/A</p>
+                    adultMovie ?<p>18+</p> :<p className="border-1 border-white text-white sm:w-[4vw] text-center w-[15vw]">U/A</p>
                     
                 }
                 <p>{movieDetailedViewList.release_date}</p>
@@ -114,14 +114,14 @@ const MovieDetails=()=> {
             <p className="text-white w-[70vw] text-[20px] mt-4 mb-4">{movieDetailedViewList.overview}</p>
             
             
-            <button className="bg-white p-2 rounded-md mt-2 w-[6vw]">Play</button>
+            <button className="bg-white p-2 rounded-md mt-2 sm:w-[6vw]">Play</button>
             </div>
         )}
         </div>
         <div className="bg-black">
             <div className="bg-black py-6 px-4">
                 <div className="flex justify-center">
-                    <div className="flex justify-between w-full max-w-5xl text-white">
+                    <div className="flex justify-between w-full max-w-5xl text-white gap-8 sm:gap-0">
                         <div>
                             <p className="text-[#94A3B8] text-sm font-semibold mb-1">Genres</p>
                             {movieDetailedViewList?.genres?.map((genre) => (
@@ -163,7 +163,7 @@ const MovieDetails=()=> {
                 {movieDetailedViewList?.similar_movies?.map(movie=>{
                     return<div>
                         
-                        <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>       
+                        <img src={movie.poster_path} alt={movie.id} className="sm:h-[190px] sm:w-[254px] rounded-md h-[14vh] w-[20vw] bg-center"/>       
                     </div>
                 })}
             </div>

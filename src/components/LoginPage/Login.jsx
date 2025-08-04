@@ -56,11 +56,8 @@ function Login() {
 
   return (
     <div
-      className="relative min-h-screen flex flex-col items-center overflow-x-hidden bg-cover bg-center text-white"
-      style={{
-        backgroundImage:
-          "url('https://res.cloudinary.com/dnns0cphq/image/upload/v1727876241/netflixmain_pnigjk.jpg')",
-      }}
+      className="relative min-h-screen flex flex-col items-center overflow-x-hidden bg-black sm:bg-[url('https://res.cloudinary.com/dnns0cphq/image/upload/v1727876241/netflixmain_pnigjk.jpg')] sm:bg-cover sm:bg-center text-white"
+      
     >
     
       <nav className="w-full flex justify-between items-center px-[4%] py-5 relative z-10">
@@ -77,12 +74,12 @@ function Login() {
 
       
       <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center max-w-[950px] w-full px-5 display-flex flex-column justify-items-center">
-        <h1 className="text-[3.125rem] font-black leading-tight mb-5">
+        <h1 className="text-[3.125rem] font-black leading-tight mb-5 hidden sm:block">
           Unlimited movies, TV
         </h1>
 
         <form className="bg-black bg-opacity-60 w-[90%] max-w-sm rounded-lg px-8 py-10 flex flex-col text-white" onSubmit={submitForm}>
-        <h1 className="text-3xl font-bold text-center mb-6">Login</h1>
+        <h1 className="text-3xl font-bold sm:text-center mb-6 text-start">Login</h1>
 
         <label htmlFor="username" className="text-sm font-semibold mb-1 text-start">
             USERNAME

@@ -17,6 +17,7 @@ function Home() {
   const [orginalList,setOrginalList]=useState([])
   const [originalError, setOriginalError] = useState(false);
   const [loading,setLoading]=useState(true)
+  const[menuOpen,setMenuOpen]=useState(false)
   useEffect(()=>{
       const trendingMovies=async()=>{
         const token = Cookies.get('jwt_token');
@@ -102,13 +103,13 @@ function Home() {
     {
       breakpoint: 768,
       settings: {
-        slidesToShow: 2,
+        slidesToShow: 3,
       }
     },
     {
       breakpoint: 480,
       settings: {
-        slidesToShow: 1,
+        slidesToShow: 3,
       }
     }
     
@@ -121,20 +122,23 @@ const searchPageIcon=()=>{
 const goAccounts=()=>{
   navigate('/accounts')
 }
+const toggleMenu=()=>{
+  setMenuOpen(prev=>!prev)
+}
 
   return (
     
     <div>
-      <nav className=" flex flex-col  w-full  px-[4%] py-5 relative z-10 h-[90vh] bg-cover bg-[url('https://res.cloudinary.com/dudjdf428/image/upload/v1754038030/Image_2_x6q60d.png')]">
-        <div className="flex flex-column  w-full ">
-          <div className="w-full flex">
+      <nav className=" flex flex-col  w-full  px-[4%] py-5 relative z-10 h-[60vh] bg-cover bg-center  bg-[url('https://res.cloudinary.com/dudjdf428/image/upload/v1754038030/Image_2_x6q60d.png')] sm:h-[90vh] bg-black/40">
+        <div className="flex flex-col  w-full ">
+          <div className="w-full flex h-[5vh] sm:h-[10vh]">
             <img
               src="https://res.cloudinary.com/dnns0cphq/image/upload/v1727864135/netflix_logo_direct-Photoroom-removebg-preview2_fmlf4l.png"
               alt="Netflix Logo"
               className="h-[45px] w-auto"
             />
           
-            <div className="flex gap-4 ml-5 mt-3 text-white">
+            <div className="flex gap-4 ml-5 mt-3 text-white hidden sm:block">
                 <p>Home</p>
                 <p onClick={popularPage} className="cursor-pointer">Popular</p>
             </div>
@@ -143,23 +147,34 @@ const goAccounts=()=>{
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-2 ml-auto text-white h-[4vh] cursor-pointer" onClick={searchPageIcon}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
-              <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[5px] ml-4 w-[35px] cursor-pointer" onClick={goAccounts}/>
+              <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[5px] ml-4 w-[35px] cursor-pointer hidden sm:block" onClick={goAccounts}/>
+              <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754295982/add-to-queue_1_cynvod.png" className="h-[4vh] mt-[5px] ml-4 w-[30px] cursor-pointer sm:hidden" onClick={toggleMenu}/>
             </div>
           </div>
+        {menuOpen&&
+        <div className="flex flex-row ml-10 text-white mb-3">
+          <div>
+            <p className="cursor-pointer">Home</p>
+            <p onClick={popularPage}>Popular</p>
+            <p onClick={goAccounts} className="cursor-pointer">Account</p>
+          </div>
+      </div>}
+          
         </div>
-          <div className=" p-8 ">
-            <p className="text-white text-[60px] font-[500]">Super Man</p>
-            <p className="text-white w-[23vw] text-[20px] mt-4 mb-4">
+          <div className=" sm:p-8 flex flex-col h-[50vh] justify-end">
+            <p className="text-white text-[35px] font-[500] sm:text-[60px]">Super Man</p>
+            <p className="text-white sm:w-[23vw] sm:text-[20px] mt-4 mb-4 w-[80vw] text-[15px]">
               Superman is a fictional superhero who first appeared in American comic books published by DC Comics.
             </p>
-            <button className="bg-white p-2 rounded-md mt-2 w-[4vw]">
+            <button className="bg-white p-2 rounded-md mt-2 sm:w-[4vw] w-[20vw]">
               Play
             </button>
           </div>
         
         
       </nav>
-      <div className="bg-black h-[95vh] p-10 ">
+      
+      <div className="bg-black sm:h-[95vh] p-10 ">
         <p className="text-white ml-5 text-[20px] font-[500]">Trending Now</p>
         {loading? 
         <div className="flex justify-center items-center h-40">
@@ -177,7 +192,7 @@ const goAccounts=()=>{
             {trendingMoviesList.map(movie => (
               <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
                 <div className="ml-5 mt-5">
-                  <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
+                  <img src={movie.poster_path} alt={movie.id} className="sm:h-[190px] sm:w-[254px] rounded-md "/>
                 </div>
               </Link>
               ))}
@@ -205,7 +220,7 @@ const goAccounts=()=>{
               {orginalList.map(movie => (
                 <Link to={`/movieDetails/${movie.id}`} key={movie.id}>
                   <div className="ml-5 mt-5">
-                    <img src={movie.poster_path} alt={movie.id} className="h-[190px] w-[254px] rounded-md"/>
+                    <img src={movie.poster_path} alt={movie.id} className="sm:h-[190px] sm:w-[254px] rounded-md"/>
                   </div>
                 </Link>
                 ))}
