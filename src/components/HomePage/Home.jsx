@@ -138,9 +138,11 @@ const toggleMenu=()=>{
               className="h-[45px] w-auto"
             />
           
-            <div className="flex gap-4 ml-5 mt-3 text-white hidden sm:block">
+            <div className="text-white hidden sm:block">
+              <div className='flex  gap-4 ml-5 mt-3'>
                 <p>Home</p>
                 <p onClick={popularPage} className="cursor-pointer">Popular</p>
+              </div>
             </div>
           
             <div className="flex w-[100vw] h-[10vh] justify-items-end">
@@ -154,7 +156,7 @@ const toggleMenu=()=>{
         {menuOpen&&
         <div className="flex flex-row ml-10 text-white mb-3">
           <div>
-            <p className="cursor-pointer">Home</p>
+            <p className="cursor-pointer text-[18px] font-[500]">Home</p>
             <p onClick={popularPage}>Popular</p>
             <p onClick={goAccounts} className="cursor-pointer">Account</p>
           </div>

@@ -64,7 +64,8 @@ const MovieDetails=()=> {
                 <img
                     src="https://res.cloudinary.com/dnns0cphq/image/upload/v1727864135/netflix_logo_direct-Photoroom-removebg-preview2_fmlf4l.png"
                     alt="Netflix Logo"
-                    className="h-[45px] w-auto"
+                    className="h-[45px] w-auto cursor-pointer"
+                     onClick={homePage}
                 />
 
                 

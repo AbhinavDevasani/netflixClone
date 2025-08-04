@@ -5,9 +5,10 @@ import { FaGoogle } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+import { useState } from 'react';
 function Accounts() {
     const navigate=useNavigate()
-    
+    const[menuOpen,setMenuOpen]=useState(false)
     
      const searchPageIcon=()=>{
       navigate('/search')
@@ -23,28 +24,35 @@ function Accounts() {
     Cookies.remove('jwt_token')
     navigate('/')
   }
+  const toggleMenu=()=>{
+    setMenuOpen(prev=>!prev)
+  }
   return (
     <>
     <nav className="bg-black">
-      <nav className=" flex w-full  px-[4%] py-5 relative z-10 ">
+      <nav className=" flex w-full  px-[4%] py-5 relative z-10  h-[9vh] sm:h-[15vh]">
         <div className="flex flex-column  w-full ">
           <div className="w-full flex">
             <img
               src="https://res.cloudinary.com/dnns0cphq/image/upload/v1727864135/netflix_logo_direct-Photoroom-removebg-preview2_fmlf4l.png"
               alt="Netflix Logo"
-              className="h-[45px] w-auto "
+              className="h-[45px] w-auto cursor-pointer"
+              onClick={homePage}
             />
           
-            <div className="flex gap-4 ml-5 mt-3 text-white">
-                <p onClick={homePage} className="cursor-pointer">Home</p>
-                <p className="cursor-pointer" onClick={popularPage}>Popular</p>
+            <div className="text-white hidden sm:block">
+              <div className='flex  gap-4 ml-5 mt-3'>
+                <p>Home</p>
+                <p onClick={popularPage} className="cursor-pointer">Popular</p>
+              </div>
             </div>
           
             <div className="flex w-[100vw] h-[10vh] justify-items-end">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mt-3 ml-auto text-white h-[4vh] cursor-pointer hidden sm:block" onClick={searchPageIcon}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
-              <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[5px] ml-4 w-[35px] cursor-pointer"/>
+              <img src="https://i.postimg.cc/gcwC5MLM/Avatar.png" className="h-[5vh] mt-[5px] ml-4 w-[35px] cursor-pointer hidden sm:block"/>
+              <img src="https://res.cloudinary.com/dudjdf428/image/upload/v1754295982/add-to-queue_1_cynvod.png" className="h-[4vh] mt-[5px] ml-4 w-[30px] cursor-pointer sm:hidden flex justify-self-end" onClick={toggleMenu}/>
 
             </div>
           </div>
@@ -52,6 +60,15 @@ function Accounts() {
         </div>
         
         </nav>
+      {menuOpen&&
+        <div className="flex flex-row ml-10 text-white mb-3">
+          <div>
+            <p onClick={homePage} className="cursor-pointer mb-1">Home</p>
+            <p onClick={popularPage} className='cursor-pointer'>Popular</p>
+            <p className="cursor-pointer font-[500] mb-1 text-[18px] ">Account</p>
+          </div>
+        </div>}
+        
     </nav>
     <div className="sm:p-10 h-[76vh] w-full">
         <p className="sm:text-[30px] p-3 text-[25px]">Accounts </p>

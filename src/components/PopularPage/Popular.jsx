@@ -58,12 +58,13 @@ function Popular() {
               <img
                 src="https://res.cloudinary.com/dnns0cphq/image/upload/v1727864135/netflix_logo_direct-Photoroom-removebg-preview2_fmlf4l.png"
                 alt="Netflix Logo"
-                className="h-[45px] w-auto"
+                className="h-[45px] w-auto cursor-pointer"
+                 onClick={homePage}
               />
             
               <div className="flex gap-4 ml-5 mt-3 text-white">
                   <p onClick={homePage} className="cursor-pointer hidden sm:block">Home</p>
-                  <p className="cursor-pointer hidden sm:block">Popular</p>
+                  <p className="hidden sm:block">Popular</p>
               </div>
             
               <div className="flex w-[100vw] h-[10vh] justify-items-end">
@@ -80,9 +81,9 @@ function Popular() {
         {menuOpen&&
         <div className="flex flex-row ml-10 text-white mb-3">
           <div>
-            <p onClick={homePage} className="cursor-pointer">Home</p>
-            <p>Popular</p>
-            <p onClick={goAccounts} className="cursor-pointer">Account</p>
+            <p onClick={homePage} className="cursor-pointer mb-1">Home</p>
+            <p className='font-[500] mb-1 text-[18px]'>Popular</p>
+            <p onClick={goAccounts} className="cursor-pointer mb-1">Account</p>
           </div>
         </div>}
         
