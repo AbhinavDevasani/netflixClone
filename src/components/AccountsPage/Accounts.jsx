@@ -42,7 +42,7 @@ function Accounts() {
           
             <div className="text-white hidden sm:block">
               <div className='flex  gap-4 ml-5 mt-3'>
-                <p>Home</p>
+                <p onClick={homePage} className='cursor-pointer'>Home</p>
                 <p onClick={popularPage} className="cursor-pointer">Popular</p>
               </div>
             </div>

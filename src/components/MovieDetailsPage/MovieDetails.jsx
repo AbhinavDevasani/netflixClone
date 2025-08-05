@@ -50,7 +50,7 @@ const MovieDetails=()=> {
     }
     
   return (
-    <div className="w-full h-[70vh] bg-cover bg-center relative"
+    <div className="w-full h-[70vh] bg-cover bg-center relative "
         style={{
             backgroundImage: movieDetailedViewList
             ? `url(${movieDetailedViewList.backdrop_path})`
@@ -169,7 +169,7 @@ const MovieDetails=()=> {
                 })}
             </div>
             </div>
-            <footer className=" gap-5  flex flex-col items-center justify-center mt-7">
+            <footer className="gap-5  flex flex-col items-center justify-center mt-7">
                 <div className="flex gap-5 ">
                     <p className="text-white w-[2vw] h-[2vh]"><FaGoogle /></p>
                     <p className="text-white w-[2vw] h-[2vh]"><FaTwitter /></p>
