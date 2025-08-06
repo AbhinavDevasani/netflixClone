@@ -6,7 +6,7 @@ import { FaGoogle } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
-
+import { Link } from 'react-router';
 const MovieDetails=()=> {
     const [movieDetailedViewList,setMovieDetailedView]=useState(null)
     const [adultMovie,setAdultMovie]=useState(true)
@@ -16,9 +16,7 @@ const MovieDetails=()=> {
     useEffect(()=>{
         const movieDetailedView=async()=>{
             const token=Cookies.get("jwt_token")
-            if(!token){
-                navigate('/')
-            }
+            
             let url=`https://apis.ccbp.in/movies-app/movies/${id}`
             let options={
                 method:"GET",
@@ -35,7 +33,7 @@ const MovieDetails=()=> {
             }
         }
         movieDetailedView()
-    },[])
+    },[id])
     const goAccounts=()=>{
         navigate('/accounts')
     }
@@ -164,7 +162,9 @@ const MovieDetails=()=> {
                 {movieDetailedViewList?.similar_movies?.map(movie=>{
                     return<div>
                         
-                        <img src={movie.poster_path} alt={movie.id} className="sm:h-[190px] sm:w-[254px] rounded-md h-[14vh] w-[20vw] bg-center"/>       
+                        <Link to= {`/movieDetails/${movie.id}`} >
+                            <img src={movie.poster_path} alt={movie.id} className="sm:h-[190px] sm:w-[254px] rounded-md h-[14vh] w-[20vw] bg-center"/>
+                        </Link>       
                     </div>
                 })}
             </div>

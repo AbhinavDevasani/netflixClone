@@ -21,9 +21,7 @@ function Home() {
   useEffect(()=>{
       const trendingMovies=async()=>{
         const token = Cookies.get('jwt_token');
-        if(!token){
-          navigate('/')
-        }
+        
         let url="https://apis.ccbp.in/movies-app/trending-movies"
         const options={
           method:"GET",
